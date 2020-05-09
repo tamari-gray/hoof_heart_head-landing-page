@@ -2,15 +2,13 @@
   import * as animateScroll from "svelte-scrollto";
 
   import { onMount } from "svelte";
-  let db;
+  let db, audio;
 
   onMount(() => {
     db = firebase.firestore();
+    audio = new Audio("fart_sound_scroll.mp3");
+    audio.muted = true;
   });
-
-  var audio = new Audio("fart_sound_scroll.mp3");
-
-  audio.muted = true;
 
   function playFart() {
     audio.muted = false;
