@@ -15,9 +15,6 @@
       rel="stylesheet"
     />
 
-    <!-- Sapper generates a <style> tag containing critical CSS
-	     for the current page. CSS for the rest of the app is
-	     lazily loaded when it precaches secondary pages -->
     %sapper.styles%
 
     <link
@@ -33,18 +30,34 @@
       href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"
     />
 
-    <!-- This contains the contents of the <svelte:head> component, if
-	     the current page has one -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBOp-2J7sVArwoc-p1TmB-yUD68ZXyjx4o",
+        authDomain: "hoof-heart-head-email-list.firebaseapp.com",
+        databaseURL: "https://hoof-heart-head-email-list.firebaseio.com",
+        projectId: "hoof-heart-head-email-list",
+        storageBucket: "hoof-heart-head-email-list.appspot.com",
+        messagingSenderId: "967540998264",
+        appId: "1:967540998264:web:a82a246e932fc53de1ad8d",
+        measurementId: "G-TRRRF0NFQ6",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+
     %sapper.head%
   </head>
   <body>
-    <!-- The application will be rendered inside this element,
-	     because `src/client.js` references it -->
     <div id="sapper">%sapper.html%</div>
 
-    <!-- Sapper creates a <script> tag containing `src/client.js`
-	     and anything else it needs to hydrate the app and
-	     initialise the router -->
     %sapper.scripts%
   </body>
 </html>

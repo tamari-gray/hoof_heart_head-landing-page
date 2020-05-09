@@ -1,7 +1,13 @@
 {
   "name": "hoof_heart_head_landing_page",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.0.1",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "now-sapper"
+    }
+  ],
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
@@ -13,6 +19,7 @@
   },
   "dependencies": {
     "compression": "^1.7.1",
+    "firebase": "^7.14.2",
     "polka": "next",
     "sirv": "^0.4.0"
   },

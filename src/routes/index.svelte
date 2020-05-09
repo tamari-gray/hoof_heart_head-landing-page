@@ -1,5 +1,13 @@
 <script>
   import * as animateScroll from "svelte-scrollto";
+
+  import { onMount } from "svelte";
+  let db;
+
+  onMount(() => {
+    db = firebase.firestore();
+  });
+
   var audio = new Audio("fart_sound_scroll.mp3");
 
   audio.muted = true;
@@ -11,12 +19,7 @@
 
   let y;
 
-  // $: if (y >= 100) {
-  //   console.log(`playing fart!`);
-  //   playFart();
-  // } else {
-  //   audio.muted = true;
-  // }
+  let showOverlay = false;
 
   // form validation
   let email = "";
@@ -33,11 +36,28 @@
     showError = true;
   }
 
-  function submitEmail() {
-    emailIsValid = true;
-    showError = false;
-    console.log(email, "is valid");
-    alert("use popup instead");
+  async function submitEmail() {
+    animateScroll.scrollToTop();
+    //put in firebase
+    await db
+      .collection("family")
+      .add({ email: email })
+      .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+        emailIsValid = true;
+        showError = false;
+        console.log(email, "is valid");
+        showOverlay = true;
+      })
+      .catch(function(error) {
+        console.error("Error adding email to firebase: ", error);
+      });
+  }
+
+  function reset() {
+    showOverlay = false;
+    emailIsValid = false;
+    email = "";
   }
 </script>
 
@@ -74,11 +94,6 @@
     border: thin solid rgba(255, 0, 0, 0.3);
   }
 
-  .input-success {
-    /* border-color: rgba(0, 255, 0, 0.5); */
-    /* border-color: #76ff03; */
-  }
-
   .show {
     display: block !important;
     color: rgba(255, 0, 0, 0.5);
@@ -87,10 +102,6 @@
   .space-top {
     height: 10vh;
   }
-  .bottom-space {
-    height: 11vh;
-  }
-
   .subText {
     font-size: 1em;
     margin-top: 0.8em;
@@ -111,6 +122,11 @@
 
   .left-side-padding {
     margin-left: 5vw;
+  }
+
+  .cont {
+    position: relative;
+    z-index: 0;
   }
 
   @media (min-width: 385px) {
@@ -168,13 +184,62 @@
       margin-left: 10vw;
     }
   }
+
+  .overlay {
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.74);
+    display: none;
+  }
+
+  .showOverlay {
+    display: block;
+  }
+
+  .popup {
+    width: 80vw;
+    height: 50vh;
+    margin-top: 20vh;
+  }
 </style>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>Hoof Heart Head</title>
 </svelte:head>
 
 <svelte:window bind:scrollY={y} />
+
+<div class="overlay" class:showOverlay>
+  <div class="popup container">
+    <div
+      class="card"
+      style="border-radius: 7.5px; max-width: 340px; margin: auto">
+
+      <div class="card-header">
+        <div class="card-title h5">Thanks for signing up &#128516 &#128516</div>
+      </div>
+      <div class="card-body">
+        Well let you know when were close to launching so
+        <span style="font-weight: bold; color: #A400B3">
+          you can be one of the first
+        </span>
+        to try out
+        <span style="font-weight: bold">Hoof Heart Head!</span>
+
+      </div>
+      <div class="card-footer">
+        <button
+          on:click={reset}
+          class="btn "
+          style="color: #A400B3; border: .05rem solid #A400B3;">
+          close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container cont">
   <div class="columns">
@@ -195,20 +260,21 @@
             <br />
             <span style="color: #76ff03;">YOUR FARTS!</span>
           </h1>
-          <h1 class="subText" style="">
-            Coming soon for
-            <br />
-            Iphone & Android
-          </h1>
+          <h1 class="subText" style="">Coming soon for Iphone & Android...</h1>
 
         </div>
 
         <div class="column col-12" style="height: 2.5vh" />
 
         <div class="column col-12 col-sm-10 col-mr-auto">
-          <p>Sign up to get early access now!</p>
+          <p>
+            Sign up to get
+            <span style="font-weight: bold;">early access</span>
+            now!
+          </p>
           <div class="input-group">
             <input
+              size="23"
               type="email"
               class:input-error={showError}
               class:input-success={emailIsValid}
