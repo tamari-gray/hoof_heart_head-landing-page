@@ -43,7 +43,6 @@
       .collection("family")
       .add({ email: email })
       .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
         emailIsValid = true;
         showError = false;
         console.log(email, "is valid");

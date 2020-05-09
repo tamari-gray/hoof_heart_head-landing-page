@@ -2,12 +2,7 @@
   "name": "hoof_heart_head_landing_page",
   "description": "",
   "version": "1.0.1",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "now-sapper"
-    }
-  ],
+
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",

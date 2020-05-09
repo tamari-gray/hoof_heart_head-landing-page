@@ -6,7 +6,7 @@ import * as sapper from "@sapper/server";
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === "development";
 
-const app = polka() // You can also use Express
+polka() // You can also use Express
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
@@ -16,4 +16,4 @@ const app = polka() // You can also use Express
     if (err) console.log("error", err);
   });
 
-export default app;
+// export default app;
