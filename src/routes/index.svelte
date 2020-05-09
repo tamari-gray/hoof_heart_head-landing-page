@@ -257,7 +257,7 @@
             <br />
             <span style="color: #76ff03;">YOUR FARTS!</span>
           </h1>
-          <h1 class="subText" style="">Coming soon for Iphone & Android...</h1>
+          <h1 class="subText" style="">Coming soon to IOS & Android...</h1>
 
         </div>
 
