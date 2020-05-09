@@ -2,22 +2,42 @@
   import * as animateScroll from "svelte-scrollto";
   var audio = new Audio("fart_sound_scroll.mp3");
 
+  audio.muted = true;
+
   function playFart() {
     audio.muted = false;
     audio.play();
   }
 
-  // function scroll() {
-  //   y = 110;
-  // }
-
   let y;
 
-  $: if (y >= 100) {
-    console.log(`playing fart!`);
-    playFart();
-  } else {
-    audio.muted = true;
+  // $: if (y >= 100) {
+  //   console.log(`playing fart!`);
+  //   playFart();
+  // } else {
+  //   audio.muted = true;
+  // }
+
+  // form validation
+  let email = "";
+  let emailIsValid = false;
+  let showError = false;
+
+  function validateEmail() {
+    console.log("validating:", email);
+    email && /(^\w.*@\w+\.\w)/.test(email) ? submitEmail() : validationError();
+  }
+
+  function validationError() {
+    console.log("invalid email");
+    showError = true;
+  }
+
+  function submitEmail() {
+    emailIsValid = true;
+    showError = false;
+    console.log(email, "is valid");
+    alert("use popup instead");
   }
 </script>
 
@@ -46,6 +66,24 @@
     margin-top: 1em;
   }
 
+  .email-error-message {
+    display: none;
+  }
+
+  .input-error {
+    border: thin solid rgba(255, 0, 0, 0.3);
+  }
+
+  .input-success {
+    /* border-color: rgba(0, 255, 0, 0.5); */
+    /* border-color: #76ff03; */
+  }
+
+  .show {
+    display: block !important;
+    color: rgba(255, 0, 0, 0.5);
+  }
+
   .space-top {
     height: 10vh;
   }
@@ -64,17 +102,24 @@
     height: 150px;
     -ms-transform: rotate(15deg);
     transform: rotate(15deg);
+    margin-top: 15vh;
   }
 
-  @media (min-width: 380px) {
+  .img-parent {
+    margin: auto;
+  }
+
+  .left-side-padding {
+    margin-left: 5vw;
+  }
+
+  @media (min-width: 385px) {
     .warm-break {
       display: none;
     }
     img {
-      height: 170px;
-    }
-    .bottom-space {
-      height: 16vh;
+      height: 150px;
+      margin-top: 22vh;
     }
   }
 
@@ -97,12 +142,30 @@
     }
   }
 
+  @media (min-width: 600px) {
+    img {
+      margin-top: 0;
+    }
+    .left-side-padding {
+      margin-left: 5vw;
+    }
+  }
+
   @media (min-width: 1000px) {
     h1 {
       font-size: 3em;
     }
     img {
       height: 300px;
+    }
+  }
+
+  @media (min-width: 1350px) {
+    .warm-break {
+      display: block;
+    }
+    .left-side-padding {
+      margin-left: 10vw;
     }
   }
 </style>
@@ -119,12 +182,13 @@
 
       <div class="space-top" />
     </div>
-    <div class="column col-12 columns">
-      <div class="columns column col-sm-12 col-8 col-ml-auto">
-        <div class="column col-12 col-sm-10 col-mx-auto">
+    <div class="column col-xl-12 col-11 col-mx-auto columns">
+      <div
+        class="columns column col-sm-12 col-xl-8 col-6 col-ml-auto
+        left-side-padding">
+        <div class="column col-12 col-sm-10">
           <h1>
             Feel your families
-            <!-- <span style="color: #76ff03; font-style: italic">warm</span> -->
             <span style="color: #76ff03">warm</span>
             <br class="warm-break" />
             energy, by sending them
@@ -141,24 +205,33 @@
 
         <div class="column col-12" style="height: 2.5vh" />
 
-        <div class="column col-8 col-sm-10 col-mx-auto">
+        <div class="column col-12 col-sm-10 col-mr-auto">
           <p>Sign up to get early access now!</p>
           <div class="input-group">
             <input
-              type="text"
-              class="form-input"
+              type="email"
+              class:input-error={showError}
+              class:input-success={emailIsValid}
               placeholder="Email address"
-              on:click={() => animateScroll.scrollToBottom()} />
+              bind:value={email}
+              on:click={() => {
+                animateScroll.scrollToBottom();
+                playFart();
+                showError = false;
+              }} />
             <button
               class="btn btn-primary input-group-btn"
-              style="background: #EB03FF; border-color:#A400B3 ">
+              style="background: #EB03FF; border-color:#A400B3 "
+              on:click={validateEmail}>
               Sign up
             </button>
           </div>
+          <p class="email-error-message" class:show={showError}>
+            please enter a valid email
+          </p>
         </div>
       </div>
-      <div class="column col-12 bottom-space" style="" />
-      <div class="column col-sm-4 col-mx-auto col-3">
+      <div class="column col-3 img-parent ">
         <img src="app_mockup.png" style="" alt="..." />
       </div>
     </div>
