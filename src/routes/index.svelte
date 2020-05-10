@@ -100,9 +100,9 @@
     height: 10vh;
   }
   .subText {
-    font-size: 1em;
+    font-size: 0.9em;
     margin-top: 0.8em;
-    font-style: italic;
+    /* font-style: italic; */
     font-family: "Roboto";
   }
 
@@ -110,7 +110,7 @@
     height: 150px;
     -ms-transform: rotate(15deg);
     transform: rotate(15deg);
-    margin-top: 15vh;
+    margin-top: 5vh;
   }
 
   .img-parent {
@@ -132,7 +132,7 @@
     }
     img {
       height: 150px;
-      margin-top: 22vh;
+      margin-top: 15vh;
     }
   }
 
@@ -150,17 +150,21 @@
     .cont {
       padding-left: 0.4rem;
     }
-    img {
-      height: 250px;
-    }
   }
 
   @media (min-width: 600px) {
     img {
       margin-top: 0;
+      height: 250px;
     }
     .left-side-padding {
       margin-left: 5vw;
+    }
+    .subText {
+      font-size: 0.9em;
+    }
+    .description {
+      max-width: 51vw;
     }
   }
 
@@ -171,6 +175,12 @@
     img {
       height: 300px;
     }
+    .subText {
+      font-size: 1em;
+    }
+    .description {
+      max-width: 56vw;
+    }
   }
 
   @media (min-width: 1350px) {
@@ -179,6 +189,13 @@
     }
     .left-side-padding {
       margin-left: 10vw;
+    }
+    .subText {
+      font-size: 1em;
+    }
+
+    .description {
+      max-width: 40vw;
     }
   }
 
@@ -257,7 +274,17 @@
             <br />
             <span style="color: #76ff03;">YOUR FARTS!</span>
           </h1>
-          <h1 class="subText" style="">Available soon on IOS & Android...</h1>
+          <div class="description">
+            <h1 class="subText" style="">
+              <span style="">Hoof Heart Head</span>
+              gives you the power to record your beautiful farts and send them
+              to your family & friends. Now when you rip you'll get their
+              reactions anywhere you go.
+              <span style="font-style:italic">
+                Coming soon to IOS & Android
+              </span>
+            </h1>
+          </div>
 
         </div>
 
@@ -265,13 +292,12 @@
 
         <div class="column col-12 col-sm-10 col-mr-auto">
           <p>
-            Sign up to get
-            <span style="font-weight: bold;">early access</span>
-            now!
+            Sign up now to get
+            <span style="font-weight: bold;">early access!</span>
           </p>
           <div class="input-group">
             <input
-              size="23"
+              size="22"
               type="email"
               class:input-error={showError}
               class:input-success={emailIsValid}
